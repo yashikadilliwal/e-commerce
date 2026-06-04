@@ -14,6 +14,7 @@ class Category(models.Model):
     
 class Product(models.Model):
     name=models.CharField(max_length=100)
+    image=models.ImageField(upload_to='products/', null=True, blank=True)
     slug=AutoSlugField(populate_from='name', unique=True)
     category=models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product')
     description=models.TextField()

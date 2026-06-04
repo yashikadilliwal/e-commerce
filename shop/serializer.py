@@ -20,7 +20,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True, read_only=True)
+    items = CartItemSerializer(many=True, read_only=True) #items = cart.items.all()
     class Meta:
         model = Cart
         fields = "__all__"
