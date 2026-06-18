@@ -20,9 +20,11 @@ from django.conf.urls.static import static
 
 
 from core import settings
+from shop.views_frontend import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", home),
     path('api/', include('shop.urls')),
     path('api/auth/', include('accounts.urls'))
 ]

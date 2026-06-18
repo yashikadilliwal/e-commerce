@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce REST API | High Performance Backend</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.10);
+
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-muted: #d1d5db;
+
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+        }
+
+        footer p {
+            color: var(--text-muted) !important;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Abstract Gradient Background Glows */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -50px;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+            bottom: 10%;
+            left: -150px;
+            z-index: -1;
+        }
+
+        /* Premium Glassmorphic Navbar */
+        .navbar {
+            background: rgba(11, 15, 25, 0.7) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary) !important;
+        }
+
+        /* Hero Section Styling */
+        .hero-section {
+            padding: 160px 0 100px 0;
+        }
+
+        .badge-tech {
+            background: rgba(139, 92, 246, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Action Buttons with Dynamic Shadow */
+        .btn-custom-primary {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(139, 92, 246, 0.45);
+            color: white;
+        }
+
+        .btn-custom-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Feature Cards Grid */
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .feature-card:nth-child(even) .icon-box {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .code-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            background-color: rgba(7, 10, 17, 0.8) !important;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <i class="fa-solid fa-server text-primary fs-5"></i> E-Commerce API
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/"><i class="fa-solid fa-user-shield me-1"></i> Admin Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/api/products/"><i class="fa-solid fa-code me-1"></i> API
+                            Endpoints</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container text-center">
+            <div class="badge-tech animate__animated animate__fadeInUp">
+                <i class="fa-solid fa-bolt"></i> Powered by Django REST Framework & PostgreSQL
+            </div>
+
+            <h1 class="display-3 hero-title mb-4">
+                Production-Ready <br class="d-none d-md-block"> E-Commerce REST API
+            </h1>
+
+            <p class="fs-5 hero-desc mb-5">
+                A secure, scalable, and lightning-fast backend solution architectures for modern online stores. Easily
+                manage catalogs, carts, and checkout flows.
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/api/products/" class="btn btn-custom-primary btn-lg">
+                    <i class="fa-solid fa-rocket me-2"></i> Explore Endpoints
+                </a>
+                <a href="/admin/" class="btn btn-custom-secondary btn-lg">
+                    <i class="fa-solid fa-gears me-2"></i> Access Admin Panel
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="pb-5 mb-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Products & Categories</h5>
+                        <p class="text-muted small mb-3">Hierarchical categories, advanced filtering, searching, and
+                            full CRUD capability for inventory management.</p>
+                        <span class="code-tag">GET /api/products/</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Cart & Orders</h5>
+                        <p class="text-muted small mb-3">Session/User linked cart system with seamless conversion to
+                            multi-item structured customer orders.</p>
+                        <span class="code-tag">POST /api/cart/checkout/</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h5 class="fw-bold mb-2">Secure Auth</h5>
+                        <p class="text-muted small mb-3">Robust JWT or Token-based authentication layer ensuring user
+                            route privacy and roles restrictions.</p>
+                        <span class="code-tag">POST /api/auth/token/</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 text-center mt-auto">
+        <div class="container">
+            <p class="mb-0 text-muted small">
+                &copy; 2026 E-Commerce API. Built with precision using <span class="text-white">Django Framework</span>
+                & <span class="text-white">PostgreSQL</span>.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
